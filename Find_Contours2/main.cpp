@@ -31,12 +31,12 @@ Point min(vector<Point> P);
 
 
 int main() {
-	string read_file = "./input_file";
-	string dir_name = "test";
-	vector<string> read_files;
+	//string read_file = "./input_file/";
 	HANDLE hFind;
+	int per_num = 0;//“šˆÄ–‡”
+	string dir_name ="./input_file/";
+	vector<string> read_files;
 	WIN32_FIND_DATA win32fd;
-
 	vector<string> file_name;
 	std::string extension[3] = { "png" ,"jpg", "bmp" };
 
@@ -44,6 +44,9 @@ int main() {
 	for (size_t i = 0; i < 3; i++)
 	{
 		string ser_name=dir_name+ "*." + extension[i];
+		
+//		cout << ser_name << endl;
+
 		hFind = FindFirstFile(ser_name.c_str(), &win32fd);
 		if (hFind == INVALID_HANDLE_VALUE) {
 			continue;
@@ -58,11 +61,11 @@ int main() {
 		FindClose(hFind);
 	}
 
+	cout << file_name.size() << endl;
+	per_num = file_name.size();
 
-	for ( auto files:file_name)
-	{
-		cout << files << endl;
-	}
+
+	
 	
 	return 0;
 }

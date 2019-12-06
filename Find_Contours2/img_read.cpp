@@ -21,13 +21,13 @@ using namespace cv;
 using namespace std;
 
 
-vector<Mat>  Paper_Reed() {
+vector<Mat>  Paper_Reed(string Paper_name) {
 
 	vector<Mat> Papers;
 	vector<string>file_names;
 	string Paper_num = "0";
 	string num;
-	string Paper_name;
+
 	Mat sta_img;
 
 	for (size_t i = 0; i < max_pro; i++) {
@@ -36,7 +36,7 @@ vector<Mat>  Paper_Reed() {
 		sta_img = imread(Paper_name);
 		if (true == sta_img.empty()) {
 			if (i == 0) {
-				//—áŠO”»’è‚ð’Ç‰Á‚·‚é.
+				break;
 			}
 		
 			Papers.push_back(imread(Paper_name));
