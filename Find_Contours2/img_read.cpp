@@ -25,7 +25,6 @@ vector<Mat>  Paper_Reed() {
 
 	vector<Mat> Papers;
 	vector<string>file_names;
-
 	string Paper_num = "0";
 	string num;
 	string Paper_name;
@@ -39,9 +38,9 @@ vector<Mat>  Paper_Reed() {
 			if (i == 0) {
 				//—áŠO”»’è‚ğ’Ç‰Á‚·‚é.
 			}
-			break; //“Ç‚İ‚ß‚È‚­‚È‚Á‚½‚çI—¹
+		
+			Papers.push_back(imread(Paper_name));
 		}
-		Papers.push_back(imread(Paper_name));
+		return Papers;
 	}
-	return Papers;
 }
