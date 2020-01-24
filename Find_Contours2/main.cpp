@@ -1,3 +1,19 @@
+/*
+Team hoge 採点支援アプリケーション　システムAソースコード
+言語　 C++17
+実装　OpenCV3
+想定環境 VC++ Visual Studio 2019
+
+
+主なソースコード
+
+main.cpp メインファイル
+img_read.cpp  ファイル入出力実装
+img_ex.cpp 画像処理実装
+
+*/
+
+
 #include <iostream>
 #include <memory>
 #include<stdexcept>
@@ -28,7 +44,7 @@ using namespace std;
 vector<Mat> img_run(Mat image1,string filename);//画像処理関数
 vector<Mat>  Paper_Reed(vector<string> Paper_name);//画像読み込み関数
 vector<vector<Mat>> sort_img(vector<vector<Mat>> imgs);
-int  Paper_output(vector<vector<Mat>> out);
+int  Paper_output(vector<vector<Mat>> out, vector<Mat> out_ans);
 Point max(vector<Point> P);
 Point min(vector<Point> P);
 
@@ -79,14 +95,7 @@ int main() {
 
 
 	
-	Paper_output(out_ans);//一時的にoutput;
-
-
-
-
-
-	
-
+	Paper_output(out_ans,Pre_processing_data);//画像処理
 
 	return 0;
 }

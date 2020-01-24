@@ -20,6 +20,7 @@
 
 #define max_size 100
 #define max_pro 100
+#define per_nums_par 11
 using namespace cv;
 using namespace std;
 namespace fs = std::filesystem;
@@ -46,16 +47,15 @@ vector<Mat>  Paper_Reed(vector<string> Paper_name) {//ファイル読み込み
 }
 
 
-int Paper_output(vector<vector<Mat>> out) {//ファイル出力.
+int Paper_output(vector<vector<Mat>> out, vector<Mat> out_ans) {//ファイル出力.
 	string Folder_names="./Regular_test/";
 	string ser_name;
 	string img_data_name;
 	//string current_paths = fs::current_path();
-	vector < vector<Mat> >out_ans;
 	int een=0;
 	//fs::path ans_path=fs::current_path();//作業パスの出力
 	fs::path out_path;
-
+	int test_num = 0;
 
 	for (auto a: out) {
 		if (een < a.size()) {//一番大問数が多い問題を念の為取得
@@ -65,41 +65,55 @@ int Paper_output(vector<vector<Mat>> out) {//ファイル出力.
 
 	
 
-	for (size_t i = 0; i < INT_FAST32_MAX; i++)
-	{
-		if (true != fs::exists(Folder_names + "/version" + to_string(i))) {
-			fs::create_directories(Folder_names + "/version" + to_string(i));//ディレクトリ作成
-			fs::current_path(Folder_names + "/version" + to_string(i));
-			break;
-		}
+	
+	if (true != fs::exists(Folder_names + "/version_" + to_string(0))) {
+			fs::create_directories(Folder_names + "/version_" + to_string(0));//ディレクトリ作成		
+	}
+	
+	fs::current_path(Folder_names + "/version_" + to_string(0));
+
+
+
+	if (false == fs::exists("./test_" + to_string(0))) {
+		fs::create_directories("./test_" + to_string(0));
+
 	}
 
-	
 
-	for (size_t i = 0; i < out.size(); i++)
+	fs::current_path("./test_" + to_string(0));
+	int t = 0;
+
+	for (auto ans_per : out_ans) {
+		imwrite(fs::absolute(fs::current_path()).string() + "/" + "test_" + to_string(t) + ".jpg", ans_per);
+		t++;
+	}
+
+	fs::current_path("../");
+
+	for (size_t i = 1; i < out.size(); i++)
 	{
-
+		if (out.at(i).size() > per_nums_par) {
+			test_num = out.at(i).size();
+		}	
+		else
+		{
+			test_num = per_nums_par;
+		}
 		
-		for (size_t j = 0; j < out.at(i).size(); j++) {
+		for (size_t j = 1; j < test_num; j++) {
 
 			if (false == fs::exists("./test_" + to_string(j))) {
 				fs::create_directories("./test_" + to_string(j));
 			}
 			fs::current_path("./test_" + to_string(j));
 
-			//fs::path testout = fs::absolute(fs::current_path());
-			imwrite(fs::absolute(fs::current_path()).string() +"/" +to_string(i) + ".jpg",out.at(i).at(j));
-			fs::current_path("../");
-		
-		}
-		
-	}
-
+			
+			if(out.at(i).size() > j)
+				imwrite(fs::absolute(fs::current_path()).string() +"/" +to_string(i) + ".jpg",out.at(i).at(j));
 	
-
-
-
-
+			fs::current_path("../");
+		}
+	}
 	return 0;
 }
 
@@ -110,7 +124,7 @@ vector<vector<Mat>> sort_img(vector<vector<Mat>> imgs) {
 	for (auto test : imgs) {
 		for (auto cvt : imgs) {
 			cvtColor(cvt, hsv_test, CV_BGR2HSV);
-			
+					
 		 }
 	}
 
